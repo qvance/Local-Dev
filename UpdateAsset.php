@@ -12,6 +12,7 @@ session_start();
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css" />
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
+<script type='text/javascript' src="LeSigh.js"></script>
 
 <title>DISA Model Inventory</title>
 
@@ -56,28 +57,31 @@ $(document).ready(function() {
 </script>
 <?php
 
-if (isset($_SESSION['Serial'])) {
+if (isset($_SESSION['Asset'])) {
 /*	Examples of changing Mongo document fields into strings - find returns an iterative array, findOne returns the actual document
 	$recordId = (string) $-Name of variable which holds the Mongo document-["_id"];
 	$recordId = "{$doc['_id']}"; */
-	$sid = "[$_SESSION['Serial']['_id']}";
-	$sn = "{$_SESSION['Serial']['SeriallNumber']}";
-	$mn = "{$_SESSION['Serial']['ModellNumber']}";
-	$mna = "{$_SESSION['Serial']['ModelName']}";
-	$man = "{$_SESSION['Serial']['Manufacturer']}";
-	$ty = "{$_SESSION['Serial']['Type']}";
-	$pr = "{$_SESSION['Serial']['Processor']}";
-	$mem = "{$_SESSION['Serial']['Memory']}";
-	$gph = "{$_SESSION['Serial']['Graphics']}";
-	$ops = "{$_SESSION['Serial']['OS']}";
-	$anam = "{$_SESSION['Serial']['AN']}";
-	$locale = "{$_SESSION['Serial']['Location']}";
-	$priu = "{$_SESSION['Serial']['Primary']}";
-	$stat = "{$_SESSION['Serial']['Status']}";
+	$sid = "{$_SESSION['Asset']["_id"]}";
+	$sn = "{$_SESSION['Asset']['SerialNumber']}";
+	$mn = "{$_SESSION['Asset']['ModelNumber']}";
+	$mna = "{$_SESSION['Asset']['ModelName']}";
+	$man = "{$_SESSION['Asset']['Manufacturer']}";
+	$ty = "{$_SESSION['Asset']['Type']}";
+	$pr = "{$_SESSION['Asset']['Processor']}";
+	$mem = "{$_SESSION['Asset']['Memory']}";
+	$gph = "{$_SESSION['Asset']['Graphics']}";
+	$ops = "{$_SESSION['Asset']['OS']}";
+	$anam = "{$_SESSION['Asset']['AN']}";
+	$locale = "{$_SESSION['Asset']['Location']}";
+	$priu = "{$_SESSION['Asset']['Primary']}";
+	$stat = "{$_SESSION['Asset']['Status']}";
 
 } else {
 
+	echo "<script type = text/javascript> alert ('That is an invalid serial number. Please try again.'); </script>";
+	$_SESSION['ErrorText'] = "Invalid serial number. Please try again.";
 	header("Location: http://localhost/~quentinvance/UpdateSearch.php");
+
 
 }
 
@@ -89,48 +93,60 @@ if (isset($_SESSION['Serial'])) {
 
 <p>
 <h4><strong>Select fields to update:</strong></h4>
-</p>
 
-<p>
+
 <input type="checkbox" name="upsernum" class="fieldcheck" id="upsernum">
 <label for="ModelNumber">Serial Number</label>
 <input type="text" name="SerialNumber" id="SerNumber" disabled <?php echo 'value = "'.$sn.'">'; ?>
 </p>
 
-<p>
+<p id = "Modeled">
 <input type="checkbox" name="upmodnum" class="fieldcheck" id="upmodnum">
 <label for="ModelNumber">Model Number</label>
-<input type="text" name="ModelNumber" id="ModNumber" disabled <?php echo 'value = "'.$mn.'">'; ?>
-</p>
+<select name="ModelNumber" id = "ModNumber">
 
+<?php
+
+$collection = $db->Models;
+$models = $collection->find();
+
+ foreach($models as $mnli) {
+	echo '<option value ="'.$mnli["ModelNumber"].'" data-modelname ="'.$mnli["ModelName"].'" data-manufacturer ="'.$mnli["Manufacturer"].'" data-type ="'.$mnli["Type"].'" data-processor ="'.$mnli["Processor"].'" data-memory ="'.$mnli["Memory"].'">'.$mnli["ModelNumber"].'</option>';
+
+}
+	echo '<option selected="selected" value ="'.$mn.'">'.$mn.'</option>';
+?>
+
+</select>
+</p>
 <p>
 <input type="checkbox" name="upmodnam" class="fieldcheck" id="upmodnam">
 <label for="ModelName">Model Name</label>
-<input type="text" name="ModelName" disabled <?php echo 'value = "'.$mna.'">'; ?>
+<input type="text" name="ModelName" id="ModName" <?php echo 'value = "'.$mna.'">'; ?>
 </p>
 
 <p>
 <input type="checkbox" name="upmodman" class="fieldcheck" id="upmodman">
 <label for="Manufacturer">Manufacturer</label>
-<input type="text" name="Manufacturer" disabled <?php echo 'value = "'.$man.'">'; ?>
+<input type="text" name="Manufacturer" disabled id="Manu" <?php echo 'value = "'.$man.'">'; ?>
 </p>
 
 <p>
 <input type="checkbox" name="upmodtype" class="fieldcheck" id="upmodtype">
 <label for="Type">Type</label>
-<input type="text" name="Type" disabled <?php echo 'value = "'.$ty.'">'; ?>
+<input type="text" name="Type" disabled id="Typical" <?php echo 'value = "'.$ty.'">'; ?>
 </p>
 
 <p>
 <input type="checkbox" name="upmodproc" class="fieldcheck" id="upmodproc">
 <label for="Processor">Processor</label>
-<input type="text" name="Processor" disabled <?php echo 'value = "'.$pr.'">'; ?>
+<input type="text" name="Processor" disabled id="Proc" <?php echo 'value = "'.$pr.'">'; ?>
 </p>
 
 <p>
 <input type="checkbox" name="upmodmem" class="fieldcheck" id="upmodmem">
 <label for="Memory">Memory(GB)</label>
-<input type="text" name="Memory" disabled <?php echo 'value = "'.$mem.'">'; ?>
+<input type="text" name="Memory" disabled id="Mem" <?php echo 'value = "'.$mem.'">'; ?>
 </p>
 
 <p>
@@ -284,14 +300,13 @@ if (count($asset) == $assetcount) {
 
 else {
 
-	echo "Please fill in all fields before clicking on 'Submit', namely " . join(", ", $emptymodels) . ".";
+	echo "Please fill in all fields before clicking on 'Submit', namely " . join(", ", $emptyassets) . ".";
 
 }
 
 }
 
 
-*/
 ?>
 
 </div>

@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 
 <?php
-require_once('mongodb_config.php');
-session_start();
+require_once('mongodb_config.php'); 
 ?>
 
 <html>
@@ -29,9 +28,9 @@ session_start();
 <ul class="menu" rel="sam1">
 <li><a href="http://localhost/~quentinvance/Home.php">Home</a></li>
 <li><a href="http://localhost/~quentinvance/AssetEntry.php">Asset Entry</a></li>
-<li><a href="http://localhost/~quentinvance/ModelEntry.php">Model Entry</a></li>
+<li class = "active"><a href="http://localhost/~quentinvance/ModelEntry.php">Model Entry</a></li>
 <li><a href="#">Search</a></li>
-<li class = "active"><a href="http://localhost/~quentinvance/UpdateSearch.php">Update Entry</a></li>
+<li><a href="http://localhost/~quentinvance/UpdateSearch.php">Update Entry</a></li>
 <li><a href="#">Miscellanea</a></li>
 </ul>
 
@@ -54,92 +53,47 @@ $(document).ready(function() {
 	$('input[id=ModNumber]').focus();
 });
 </script>
-<?php
 
-if(isset($_SESSION['Model'])) {
-
-/*	Examples of changing Mongo document fields into strings - find returns an iterative array, findOne returns the actual document
-	$recordId = (string) $-Name of variable which holds the Mongo document-["_id"];
-	$recordId = "{$doc['_id']}"; */
-	$modid = "{$_SESSION['Model']["_id"]}";
-	$mn = "{$_SESSION['Model']['ModelNumber']}";
-	$mna = "{$_SESSION['Model']['ModelName']}";
-	$man = "{$_SESSION['Model']['Manufacturer']}";
-	$ty = "{$_SESSION['Model']['Type']}";
-	$pr = "{$_SESSION['Model']['Processor']}";
-	$mem ="{$_SESSION['Model']['Memory']}";
-	$ch = "{$_SESSION['Model']['Check64']}";
-
-} else {
-
-	echo "<script type = text/javascript> alert ('That is an invalid model number. Please try again.'); </script>";
-	$_SESSION['ErrorText'] = "Invalid model number. Please try again.";
-	header("Location: http://localhost/~quentinvance/UpdateSearch.php");
-}
-
-
-?>
 <legend>Model Entry</legend>
-
-<form method = "post" action = "">
 <fieldset>
-
+<form method = "post" action = "">
 <p>
-<h4><strong>Select fields to update:</strong></h4>
-</p>
-<?php var_dump($modid); ?>
-<p>
-<input type="checkbox" name="upmodnum" class="fieldcheck">
 <label for="ModelNumber">Model Number</label>
-<input type="text" name="ModelNumber" id="ModNumber" disabled <?php echo 'value = "'.$mn.'">'; ?>
+<input type="text" name="ModelNumber" id="ModNumber">
 </p>
-
 <p>
-<input type="checkbox" name="upmodnam" class="fieldcheck">
-<label for="ModelName">Model Name</label>
-<input type="text" name="ModelName" disabled <?php echo 'value = "'.$mna.'">'; ?>
+<label for ="ModelName">Model Name</label>
+<input type="text" name="ModelName">
 </p>
-
 <p>
-<input type="checkbox" name="upmodman" class="fieldcheck">
 <label for="Manufacturer">Manufacturer</label>
-<input type="text" name="Manufacturer" disabled <?php echo 'value = "'.$man.'">'; ?>
+<input type="text" name="Manufacturer">
 </p>
-
 <p>
-<input type="checkbox" name="upmodtype" class="fieldcheck">
 <label for="Type">Type</label>
-<input type="text" name="Type" disabled <?php echo 'value = "'.$ty.'">'; ?>
+<input type="text" name="Type">
 </p>
-
 <p>
-<input type="checkbox" name="upmodproc" class="fieldcheck">
 <label for="Processor">Processor</label>
-<input type="text" name="Processor" disabled <?php echo 'value = "'.$pr.'">'; ?>
+<input type="text" name="Processor">
 </p>
-
 <p>
-<input type="checkbox" name="upmodmem" class="fieldcheck">
 <label for="Memory">Memory(GB)</label>
-<input type="text" name="Memory" disabled <?php echo 'value = "'.$mem.'">'; ?>
+<input type="text" name="Memory">
 </p>
-
 <p>
-<input type="checkbox" name="upmodch64" class="fieldcheck">
 <label for="Check64">64-bit Capable</label>
-<input type="checkbox" name="Check64" value="True" disabled class="datacheck" <?php if ($ch === "1") {echo 'checked = "checked">';} ?> 
+<input type="checkbox" name="Check64" value="True">
+<!-- <input type="radio" name="check64" value="False">No -->
 </p>
 <p>
-<p>
-<input type="submit" name="Update" value="Update">
+<input type="submit" name="Save" value="Save">
 </p>
-</p>
-
 </fieldset>
 </form>
 
 <?php
-/*
+
 $collection=$db->Models;
 
 if (isset($_POST['Save'])) {
@@ -219,14 +173,24 @@ if (isset($_POST['Check64'])) {
 }
 
 }
-*/
+
 ?>
 
 </div>
 </div>
 
 <div class = "footercleared"></div>
-<div id = "footer"></div>
+<div id="footer">
+
+</div>
 
 </body>
 </html>
+
+
+
+
+
+
+
+

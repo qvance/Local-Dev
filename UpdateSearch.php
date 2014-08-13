@@ -27,11 +27,11 @@ session_start();
 <div class="trial">
 <div class="container">
 <ul class="menu" rel="sam1">
-<li><a href="http://192.168.181.54/Home.php">Home</a></li>
-<li><a href="http://192.168.181.54/AssetEntry.php">Asset Entry</a></li>
-<li class = "active"><a href="http://192.168.181.54/ModelEntry.php">Model Entry</a></li>
+<li><a href="http://localhost/~quentinvance/Home.php">Home</a></li>
+<li><a href="http://localhost/~quentinvance/AssetEntry.php">Asset Entry</a></li>
+<li><a href="http://localhost/~quentinvance/ModelEntry.php">Model Entry</a></li>
 <li><a href="#">Search</a></li>
-<li><a href="#">Update Entry</a></li>
+<li class = "active"><a href="http://localhost/~quentinvance/UpdateSearch.php">Update Entry</a></li>
 <li><a href="#">Miscellanea</a></li>
 </ul>
 
@@ -58,8 +58,11 @@ $(document).ready(function() {
 <legend>Update</legend>
 <fieldset>
 <form method = "post" action = "">
+
+<?php if (isset($_SESSION['ErrorText'])) { echo '<p>'.$_SESSION["ErrorText"].'</p>'; unset($_SESSION['ErrorText']); } ?>
+
 <p>
-<label for="SeriallNumber">Serial Number</label>
+<label for="SerialNumber">Serial Number</label>
 <input type="text" name="SerialNumber" id="SerialNumber">
 <input type="submit" name="AssetSearch" value="Search" class="search">
 </p>
@@ -77,7 +80,7 @@ if (isset($_POST['AssetSearch'])) {
 	
 	$assetcollection = $db->Assets;
 	$serialnumber = $_POST['SerialNumber'];
-	$_SESSION['Asset'] = $modelcollection->findOne(array("SerialNumber" => "$serialnumber"));
+	$_SESSION['Asset'] = $assetcollection->findOne(array("SerialNumber" => "$serialnumber"));
 	header("Location: http://localhost/~quentinvance/UpdateAsset.php");
 }
 

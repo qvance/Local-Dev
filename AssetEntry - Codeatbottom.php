@@ -1,98 +1,7 @@
 <!DOCTYPE html>
-
-<?php 
-
-require_once('mongodb_config.php');
-
-$collection=$db->Assets;
-
-if (isset($_POST['Save'])) {
-
-
-$serialnumber = $_POST['SerialNumber'];
-$modelnumber = $_POST['ModelNumber'];
-$modelname = $_POST['ModelName'];
-$manufacturer = $_POST['Manufacturer'];
-$type = $_POST['Type'];
-$processor = $_POST['Processor'];
-$memory = $_POST['Memory'];
-$graphics = $_POST['Graphics'];
-$operatingsystem = $_POST['OS'];
-$assetnumber = $_POST['AN'];
-$location = $_POST['Location'];
-$primary = $_POST['Primary'];
-$status = $_POST['Status'];
-
-$asset = array(
-	'SerialNumber' => $serialnumber,
-	'ModelNumber' => $modelnumber,
-	'ModelName' => $modelname,
-	'Manufacturer' => $manufacturer,
-	'Type' => $type,
-	'Processor' => $processor,
-	'Memory' => $memory,
-	'Graphics' => $graphics,
-	'OS' => $operatingsystem,
-	'AN' => $assetnumber,
-	'Location' => $location,
-	'Primary' => $primary,
-	'Status' => $status,
-);
-
-
-$verify = $collection->findOne(array("SerialNumber" => "$serialnumber"));
-
-if($verify !== NULL) {
-
-$sysmessage = "This asset already has been logged. Please check your information again.";
-$jsalert = "<script type = text/javascript> alert ('{$serialnumber} already exists!'); </script>";
-	
-} else {
-
-$assetcount = 0;
-$emptybanners = array();
-
-foreach ($asset as $note => $info) {
-
-if (empty($info) != 1) {
- 
- $assetcount ++;
-
-}
-
-else {
-
-	array_push($emptybanners, $note);
-
-
-}
-
-}
- 
-if (count($asset) == $assetcount) {
-
-$collection->insert($asset);
-
-$sysmessage = "$serialnumber has been logged.";
-unset ($serialnumber, $modelnumber, $modelname, $manufacturer, $type, $processor, $memory, $graphics, $operatingsystem, $assetnumber, $location, $primary, $status);
-
-}
-
-else {
-
-$jsalert =  "<script type = text/javascript> alert ('Please fill in all fields before clicking on Submit.'); </script>";
-$sysmessage = "Please fill in the following information: " . join(", ", $emptybanners) . ".";
-
-}
-
-}
-
-}
-
-?>
-
 <html>
 
+<?php require_once('mongodb_config.php'); ?>
 
 <head>
 <link type = 'text/css' rel = 'stylesheet' href = 'Inventory.css' />
@@ -143,9 +52,6 @@ $(document).ready(function() {
 </script>
 
 <legend>Asset Entry</legend>
-
-<?php if (isset($sysmessage)) {print '<p>'.$sysmessage.'</p>';} ?> 
-
 <fieldset>
 
 <form method="post" action="">
@@ -269,6 +175,92 @@ $models = $collection->find();
 </form>
 
 
+<?php
+
+$collection=$db->Assets;
+
+if (isset($_POST['Save'])) {
+
+
+$serialnumber = $_POST['SerialNumber'];
+$modelnumber = $_POST['ModelNumber'];
+$modelname = $_POST['ModelName'];
+$manufacturer = $_POST['Manufacturer'];
+$type = $_POST['Type'];
+$processor = $_POST['Processor'];
+$memory = $_POST['Memory'];
+$graphics = $_POST['Graphics'];
+$operatingsystem = $_POST['OS'];
+$assetnumber = $_POST['AN'];
+$location = $_POST['Location'];
+$primary = $_POST['Primary'];
+$status = $_POST['Status'];
+
+$asset = array(
+	'SerialNumber' => $serialnumber,
+	'ModelNumber' => $modelnumber,
+	'ModelName' => $modelname,
+	'Manufacturer' => $manufacturer,
+	'Type' => $type,
+	'Processor' => $processor,
+	'Memory' => $memory,
+	'Graphics' => $graphics,
+	'OS' => $operatingsystem,
+	'AN' => $assetnumber,
+	'Location' => $location,
+	'Primary' => $primary,
+	'Status' => $status,
+);
+
+
+$verify = $collection->findOne(array("SerialNumber" => "$serialnumber"));
+
+if($verify !== NULL) {
+
+	echo "This asset already has been logged. Please check your information again.";
+	echo "<script type = text/javascript> alert ('{$serialnumber} already exists!'); </script>";
+	
+} else {
+
+$assetcount = 0;
+$emptybanners = array();
+
+foreach ($asset as $note => $info) {
+
+if (empty($info) != 1) {
+ 
+ $assetcount ++;
+
+}
+
+else {
+
+	array_push($emptybanners, $note);
+
+}
+
+}
+ 
+if (count($asset) == $assetcount) {
+
+$collection->insert($asset);
+echo "$serialnumber has been logged.";
+unset ($serialnumber, $modelnumber, $modelname, $manufacturer, $type, $processor, $memory, $graphics, $operatingsystem, $assetnumber, $location, $primary, $status);
+
+}
+
+else {
+
+	echo "Please fill in all fields before clicking on 'Submit', namely " . join(", ", $emptybanners) . ".";
+
+}
+
+}
+
+}
+
+?>
+
 </div>
 </div>
 
@@ -276,9 +268,8 @@ $models = $collection->find();
 <div id="footer">
 		
 </div>
-<?php if (isset($jsalert)) { echo $jsalert; } ?>
-</body>
 
+</body>
 </html>
 
 

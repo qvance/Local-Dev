@@ -27,9 +27,9 @@ session_start();
 <div class="trial">
 <div class="container">
 <ul class="menu" rel="sam1">
-<li><a href="http://192.168.181.54/Home.php">Home</a></li>
-<li><a href="http://192.168.181.54/AssetEntry.php">Asset Entry</a></li>
-<li><a href="http://192.168.181.54/ModelEntry.php">Model Entry</a></li>
+<li><a href="http://localhost/~quentinvance/Home.php">Home</a></li>
+<li><a href="http://localhost/~quentinvance/AssetEntry.php">Asset Entry</a></li>
+<li><a href="http://localhost/~quentinvance/ModelEntry.php">Model Entry</a></li>
 <li><a href="#">Search</a></li>
 <li class = "active"><a href="http://localhost/~quentinvance/UpdateSearch.php">Update Entry</a></li>
 <li><a href="#">Miscellanea</a></li>
@@ -61,6 +61,7 @@ if(isset($_SESSION['Model'])) {
 /*	Examples of changing Mongo document fields into strings - find returns an iterative array, findOne returns the actual document
 	$recordId = (string) $-Name of variable which holds the Mongo document-["_id"];
 	$recordId = "{$doc['_id']}"; */
+	$modid = (string)$_SESSION['Model']["_id"];
 	$mn = "{$_SESSION['Model']['ModelNumber']}";
 	$mna = "{$_SESSION['Model']['ModelName']}";
 	$man = "{$_SESSION['Model']['Manufacturer']}";
@@ -87,31 +88,31 @@ if(isset($_SESSION['Model'])) {
 </p>
 
 <p>
-<input type="checkbox" name="upmodnum" class="fieldcheck" id="upmodmem"> <script type="text/javascript" $(document).ready(function() {$('#upmodnum').click() {$('input#ModNumber').prop('disabled', false)}})
+<input type="checkbox" name="upmodnum" class="fieldcheck" id="upmodnum"> 
 <label for="ModelNumber">Model Number</label>
 <input type="text" name="ModelNumber" id="ModNumber" disabled <?php echo 'value = "'.$mn.'">'; ?>
 </p>
 
 <p>
-<input type="checkbox" name="upmodnam" class="fieldcheck" id="upmodmem">
+<input type="checkbox" name="upmodnam" class="fieldcheck" id="upmodanme">
 <label for="ModelName">Model Name</label>
 <input type="text" name="ModelName" disabled <?php echo 'value = "'.$mna.'">'; ?>
 </p>
 
 <p>
-<input type="checkbox" name="upmodman" class="fieldcheck" id="upmodmem">
+<input type="checkbox" name="upmodman" class="fieldcheck" id="upmodmanu">
 <label for="Manufacturer">Manufacturer</label>
 <input type="text" name="Manufacturer" disabled <?php echo 'value = "'.$man.'">'; ?>
 </p>
 
 <p>
-<input type="checkbox" name="upmodtype" class="fieldcheck" id="upmodmem">
+<input type="checkbox" name="upmodtype" class="fieldcheck" id="upmodtype">
 <label for="Type">Type</label>
 <input type="text" name="Type" disabled <?php echo 'value = "'.$ty.'">'; ?>
 </p>
 
 <p>
-<input type="checkbox" name="upmodproc" class="fieldcheck" id="upmodmem">
+<input type="checkbox" name="upmodproc" class="fieldcheck" id="upmodproc">
 <label for="Processor">Processor</label>
 <input type="text" name="Processor" disabled <?php echo 'value = "'.$pr.'">'; ?>
 </p>
@@ -123,7 +124,7 @@ if(isset($_SESSION['Model'])) {
 </p>
 
 <p>
-<input type="checkbox" name="upmodch64" class="fieldcheck" id="upmodmem">
+<input type="checkbox" name="upmodch64" class="fieldcheck" id="upmodchk">
 <label for="Check64">64-bit Capable</label>
 <input type="checkbox" name="Check64" value="True" disabled class="datacheck" <?php if ($ch === "1") {echo 'checked = "checked">';} ?> 
 </p>
