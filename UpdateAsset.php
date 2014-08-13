@@ -28,11 +28,11 @@ session_start();
 <div class="trial">
 <div class="container">
 <ul class="menu" rel="sam1">
-<li><a href="http://192.168.181.54/Home.php">Home</a></li>
-<li><a href="http://192.168.181.54/AssetEntry.php">Asset Entry</a></li>
-<li><a href="http://192.168.181.54/ModelEntry.php">Model Entry</a></li>
+<li><a href="http://localhost/~quentinvanceHome.php">Home</a></li>
+<li><a href="http://localhost/~quentinvanceAssetEntry.php">Asset Entry</a></li>
+<li><a href="http://localhost/~quentinvanceModelEntry.php">Model Entry</a></li>
 <li><a href="#">Search</a></li>
-<li class = "active"><a href="http://localhost/~quentinvance/UpdateSearch.php">Update Entry</a></li>
+<li class = "active"><a href="http://localhost/~quentinvanceUpdateSearch.php">Update Entry</a></li>
 <li><a href="#">Miscellanea</a></li>
 </ul>
 
@@ -62,18 +62,18 @@ if (isset($_SESSION['Asset'])) {
 	$recordId = (string) $-Name of variable which holds the Mongo document-["_id"];
 	$recordId = "{$doc['_id']}"; */
 	$sid = "{$_SESSION['Asset']["_id"]}";
-	$sn = "{$_SESSION['Asset']['SerialNumber']}";
-	$mn = "{$_SESSION['Asset']['ModelNumber']}";
-	$mna = "{$_SESSION['Asset']['ModelName']}";
+	$sn = "{$_SESSION['Asset']['Serial Number']}";
+	$mn = "{$_SESSION['Asset']['Model Number']}";
+	$mna = "{$_SESSION['Asset']['Model Name']}";
 	$man = "{$_SESSION['Asset']['Manufacturer']}";
 	$ty = "{$_SESSION['Asset']['Type']}";
 	$pr = "{$_SESSION['Asset']['Processor']}";
 	$mem = "{$_SESSION['Asset']['Memory']}";
 	$gph = "{$_SESSION['Asset']['Graphics']}";
 	$ops = "{$_SESSION['Asset']['OS']}";
-	$anam = "{$_SESSION['Asset']['AN']}";
+	$anam = "{$_SESSION['Asset']['Asset Name']}";
 	$locale = "{$_SESSION['Asset']['Location']}";
-	$priu = "{$_SESSION['Asset']['Primary']}";
+	$priu = "{$_SESSION['Asset']['Primary User']}";
 	$stat = "{$_SESSION['Asset']['Status']}";
 
 } else {
@@ -111,7 +111,7 @@ $collection = $db->Models;
 $models = $collection->find();
 
  foreach($models as $mnli) {
-	echo '<option value ="'.$mnli["ModelNumber"].'" data-modelname ="'.$mnli["ModelName"].'" data-manufacturer ="'.$mnli["Manufacturer"].'" data-type ="'.$mnli["Type"].'" data-processor ="'.$mnli["Processor"].'" data-memory ="'.$mnli["Memory"].'">'.$mnli["ModelNumber"].'</option>';
+	echo '<option value ="'.$mnli["Model Number"].'" data-modelname ="'.$mnli["Model Name"].'" data-manufacturer ="'.$mnli["Manufacturer"].'" data-type ="'.$mnli["Type"].'" data-processor ="'.$mnli["Processor"].'" data-memory ="'.$mnli["Memory"].'">'.$mnli["Model Number"].'</option>';
 
 }
 	echo '<option selected="selected" value ="'.$mn.'">'.$mn.'</option>';
@@ -180,7 +180,7 @@ $models = $collection->find();
 <p>
 <input type="checkbox" name="upmodmem" class="fieldcheck">
 <label for="AN">Asset Name</label>
-<input type="text" name="AN" disabled>
+<input type="text" name="AN" disabled <?php echo 'value = "'.$anam.'">'; ?>
 </p>
 
 <p>
@@ -208,7 +208,7 @@ $models = $collection->find();
 <p>
 <input type="checkbox" name="upmodmem" class="fieldcheck">
 <label for="Primary">Primary User</label>
-<input type="text" name="Primary" id="Prim" disabled>
+<input type="text" name="Primary" id="Prim" disabled <?php echo 'value = "'.$priu.'">'; ?>
 </p>
 
 <p>

@@ -16,15 +16,15 @@ $processor = $_POST['Processor'];
 $memory = $_POST['Memory'];
 
 $model = array(
-	'ModelNumber' => $modelnumber,
-	'ModelName' => $modelname,
+	'Model Number' => $modelnumber,
+	'Model Name' => $modelname,
 	'Manufacturer' => $manufacturer,
 	'Type' => $type,
 	'Processor' => $processor,
 	'Memory' => $memory,
 	);
 
-$verify = $collection->findOne(array("ModelNumber" => "$modelnumber"));
+$verify = $collection->findOne(array("Model Number" => "$modelnumber"));
 
 if($verify !== NULL) {
 
@@ -144,12 +144,12 @@ $(document).ready(function() {
 <fieldset>
 <form method = "post" action = "">
 <p>
-<label for="ModelNumber">Model Number</label>
+<label for="ModNumber">Model Number</label>
 <input type="text" name="ModelNumber" id="ModNumber">
 </p>
 <p>
-<label for ="ModelName">Model Name</label>
-<input type="text" name="ModelName">
+<label for ="ModName">Model Name</label>
+<input type="text" name="ModelName" id="ModName">
 </p>
 <p>
 <label for="Manufacturer">Manufacturer</label>

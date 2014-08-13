@@ -18,29 +18,29 @@ $processor = $_POST['Processor'];
 $memory = $_POST['Memory'];
 $graphics = $_POST['Graphics'];
 $operatingsystem = $_POST['OS'];
-$assetnumber = $_POST['AN'];
+$assetnumber = $_POST['AssetName'];
 $location = $_POST['Location'];
 $primary = $_POST['Primary'];
 $status = $_POST['Status'];
 
 $asset = array(
-	'SerialNumber' => $serialnumber,
-	'ModelNumber' => $modelnumber,
-	'ModelName' => $modelname,
+	'Serial Number' => $serialnumber,
+	'Model Number' => $modelnumber,
+	'Model Name' => $modelname,
 	'Manufacturer' => $manufacturer,
 	'Type' => $type,
 	'Processor' => $processor,
 	'Memory' => $memory,
 	'Graphics' => $graphics,
 	'OS' => $operatingsystem,
-	'AN' => $assetnumber,
+	'Asset Name' => $assetnumber,
 	'Location' => $location,
-	'Primary' => $primary,
+	'Primary User' => $primary,
 	'Status' => $status,
 );
 
 
-$verify = $collection->findOne(array("SerialNumber" => "$serialnumber"));
+$verify = $collection->findOne(array("Serial Number" => "$serialnumber"));
 
 if($verify !== NULL) {
 
@@ -151,12 +151,12 @@ $(document).ready(function() {
 <form method="post" action="">
 
 <p>
-<label for="SerialNumber">Serial Number</label>
+<label for="SerNum">Serial Number</label>
 <input type="text" name="SerialNumber" id="SerNum">
 </p>
 
 <p id = "Modeled">
-<label for="ModelNumber">Model Number</label>
+<label for="ModNumber">Model Number</label>
 <select name="ModelNumber" id = "ModNumber">
 <option value="choice">Choose wisely...</option>
 
@@ -167,7 +167,7 @@ $collection = $db->Models;
 $models = $collection->find();
 
  foreach($models as $mn) {
-	echo '<option value ="'.$mn["ModelNumber"].'" data-modelname ="'.$mn["ModelName"].'" data-manufacturer ="'.$mn["Manufacturer"].'" data-type ="'.$mn["Type"].'" data-processor ="'.$mn["Processor"].'" data-memory ="'.$mn["Memory"].'">'.$mn["ModelNumber"].'</option>';
+	echo '<option value ="'.$mn["Model Number"].'" data-modelname ="'.$mn["Model Name"].'" data-manufacturer ="'.$mn["Manufacturer"].'" data-type ="'.$mn["Type"].'" data-processor ="'.$mn["Processor"].'" data-memory ="'.$mn["Memory"].'">'.$mn["Model Number"].'</option>';
 
 }
 ?>
@@ -176,32 +176,32 @@ $models = $collection->find();
 </p>
 
 <p>
-<label for="ModelName">Model Name</label>
+<label for="ModName">Model Name</label>
 <input type="text" name="ModelName" id="ModName">
 </p>
 
 <p>
-<label for="Manufacturer">Manufacturer</label>
+<label for="Manu">Manufacturer</label>
 <input type="text" name="Manufacturer" id="Manu">
 </p>
 
 <p>
-<label for="Type">Type</label>
+<label for="Typical">Type</label>
 <input type="text" name="Type" id="Typical">
 </p>
 
 <p>
-<label for="Processor">Processor</label>
+<label for="Proc">Processor</label>
 <input type="text" name="Processor" id="Proc">
 </p>
 
 <p>
-<label for="Memory">Memory(GB)</label>
+<label for="Mem">Memory(GB)</label>
 <input type="text" name="Memory" id="Mem">
 </p>
 
 <p>
-<label for= "Graphics">Graphics Card</label>
+<label for= "Graph">Graphics Card</label>
 <select name = "Graphics" id = "Graph">
 <option value = 1>"Yes"</option>
 <option value = 0>"No"</option>
@@ -211,11 +211,16 @@ $models = $collection->find();
 <p>
 <label for="OS">OS</label>
 <select name= "OS" id = "OS">
+<option value = "Windows 8 Pro">Windows 8 Professional</option>
+<option value = "Windows 8">Windows 8</option>
+<option value = "Windows 7 Pro">Windows 7 Professional</option>
 <option value = "Windows 7">Windows 7</option>
-<option value = "Windows Server 2008">Windows Server 2008</option>
+<option value = "Windows Server 2012 R2">Windows Server 2012 R2</option>
+<option value = "Windows Server 2012">Windows Server 2012</option>
 <option value = "Windows Server 2008 R2">Windows Server 2008 R2</option>
+<option value = "Windows Server 2008">Windows Server 2008</option>
 <option value = "VMWare ESXi 5">VMWare ESXi 5.1</option>
-<option value = "Windows XP">Windows XP</option>
+<option value = "Windows XP">Windows XP Professional</option>
 <option value = "Windows Server 2003">Windows Server 2003</option>
 <option value = "Windows Server 2000">Windows Server 2000</option>
 </select>
@@ -223,11 +228,11 @@ $models = $collection->find();
 
 <p>
 <label for="AN">Asset Name</label>
-<input type="text" name="AN">
+<input type="text" name="AssetName" id="AN">
 </p>
 
 <p>
-<label for="Location">Location</label>
+<label for="Loc">Location</label>
 <select name = "Location" id = "Loc">
 <option value = "Corp">Corporate</option>
 <option value = "Colo">Sungard</option>
@@ -248,7 +253,7 @@ $models = $collection->find();
 </p>
 
 <p>
-<label for="Primary">Primary User</label>
+<label for="Prim">Primary User</label>
 <input type="text" name="Primary" id="Prim">
 </p>
 

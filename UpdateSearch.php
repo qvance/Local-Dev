@@ -1,8 +1,28 @@
 <!DOCTYPE html>
 
 <?php
+
 require_once('mongodb_config.php'); 
 session_start();
+
+
+if (isset($_POST['AssetSearch'])) {
+	
+	$assetcollection = $db->Assets;
+	$serialnumber = $_POST['SerialNumber'];
+	$_SESSION['Asset'] = $assetcollection->findOne(array("Serial Number" => "$serialnumber"));
+	header("Location: http://localhost/~quentinvance/UpdateAsset.php");
+}
+
+
+if (isset($_POST['ModelSearch'])) {
+	
+	$modelcollection = $db->Models;
+	$modelnumber = $_POST['ModelNumber'];
+	$_SESSION['Model'] = $modelcollection->findOne(array("Model Number" => "$modelnumber"));
+	header("Location: http://localhost/~quentinvance/UpdateModel.php");
+}
+
 ?>
 
 <html>
@@ -74,26 +94,6 @@ $(document).ready(function() {
 </fieldset>
 </form>
 
-<?php
-
-if (isset($_POST['AssetSearch'])) {
-	
-	$assetcollection = $db->Assets;
-	$serialnumber = $_POST['SerialNumber'];
-	$_SESSION['Asset'] = $assetcollection->findOne(array("SerialNumber" => "$serialnumber"));
-	header("Location: http://localhost/~quentinvance/UpdateAsset.php");
-}
-
-
-if (isset($_POST['ModelSearch'])) {
-	
-	$modelcollection = $db->Models;
-	$modelnumber = $_POST['ModelNumber'];
-	$_SESSION['Model'] = $modelcollection->findOne(array("ModelNumber" => "$modelnumber"));
-	header("Location: http://localhost/~quentinvance/UpdateModel.php");
-}
-
-?>
 
 </div>
 </div>
