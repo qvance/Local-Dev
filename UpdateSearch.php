@@ -79,7 +79,22 @@ $(document).ready(function() {
 <fieldset>
 <form method = "post" action = "">
 
-<?php if (isset($_SESSION['ErrorText'])) { echo '<p>'.$_SESSION["ErrorText"].'</p>'; unset($_SESSION['ErrorText']); } ?>
+<?php 
+
+if (isset($_SESSION['ErrorText'])) { 
+
+	echo '<p>'.$_SESSION["ErrorText"].'</p>'; 
+	unset($_SESSION['ErrorText']); 
+
+}
+
+if (isset($_SESSION['sysmessage'])) {
+
+	echo '<p>'.$_SESSION['sysmessage'].'</p>';
+	unset($_SESSION['sysmessage']);
+}
+
+ ?>
 
 <p>
 <label for="SerialNumber">Serial Number</label>
