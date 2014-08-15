@@ -128,40 +128,40 @@ $models = $collection->find();
 <p>
 <input type="checkbox" name="upmodman" class="fieldcheck" id="upmodman">
 <label for="Manufacturer">Manufacturer</label>
-<input type="text" name="Manufacturer" disabled id="Manu" <?php echo 'value = "'.$man.'">'; ?>
+<input type="text" name="Manufacturer" disabled id="ModManu" <?php echo 'value = "'.$man.'">'; ?>
 </p>
 
 <p>
 <input type="checkbox" name="upmodtype" class="fieldcheck" id="upmodtype">
 <label for="Type">Type</label>
-<input type="text" name="Type" disabled id="Typical" <?php echo 'value = "'.$ty.'">'; ?>
+<input type="text" name="Type" disabled id="ModTypical" <?php echo 'value = "'.$ty.'">'; ?>
 </p>
 
 <p>
 <input type="checkbox" name="upmodproc" class="fieldcheck" id="upmodproc">
 <label for="Processor">Processor</label>
-<input type="text" name="Processor" disabled id="Proc" <?php echo 'value = "'.$pr.'">'; ?>
+<input type="text" name="Processor" disabled id="ModProc" <?php echo 'value = "'.$pr.'">'; ?>
 </p>
 
 <p>
 <input type="checkbox" name="upmodmem" class="fieldcheck" id="upmodmem">
 <label for="Memory">Memory(GB)</label>
-<input type="text" name="Memory" disabled id="Mem" <?php echo 'value = "'.$mem.'">'; ?>
+<input type="text" name="Memory" disabled id="ModMem" <?php echo 'value = "'.$mem.'">'; ?>
 </p>
 
 <p>
-<input type="checkbox" name="upmodmem" class="fieldcheck">
+<input type="checkbox" name="upmodgraph" class="fieldcheck">
 <label for= "Graphics">Graphics Card</label>
-<select name = "Graphics" id = "Graph" disabled>
+<select name = "Graphics" id = "ModGraph" disabled>
 <option value = 1>"Yes"</option>
 <option value = 0>"No"</option>
 </select>
 </p>
 
 <p>
-<input type="checkbox" name="upmodmem" class="fieldcheck">
+<input type="checkbox" name="upmodos" class="fieldcheck">
 <label for="OS">OS</label>
-<select name= "OS" id = "OS" disabled>
+<select name= "OS" id = "ModOS" disabled> <script type = text/javascript> var
 <option value = "Windows 8 Pro">Windows 8 Professional</option>
 <option value = "Windows 8">Windows 8</option>
 <option value = "Windows 7 Pro">Windows 7 Professional</option>
@@ -178,15 +178,15 @@ $models = $collection->find();
 </p>
 
 <p>
-<input type="checkbox" name="upmodmem" class="fieldcheck">
+<input type="checkbox" name="upmodan" class="fieldcheck">
 <label for="AN">Asset Name</label>
-<input type="text" name="AN" disabled <?php echo 'value = "'.$anam.'">'; ?>
+<input type="text" name="ModAN" disabled <?php echo 'value = "'.$anam.'">'; ?>
 </p>
 
 <p>
-<input type="checkbox" name="upmodmem" class="fieldcheck">
+<input type="checkbox" name="upmodloc" class="fieldcheck">
 <label for="Location">Location</label>
-<select name = "Location" id = "Loc" disabled>
+<select name = "Location" id = "ModLoc" disabled>
 <option value = "Corp">Corporate</option>
 <option value = "Colo">Sungard</option>
 <option value = "OTS">OTS - Stow</option>
@@ -206,15 +206,15 @@ $models = $collection->find();
 </p>
 
 <p>
-<input type="checkbox" name="upmodmem" class="fieldcheck">
+<input type="checkbox" name="upmodprim" class="fieldcheck">
 <label for="Primary">Primary User</label>
-<input type="text" name="Primary" id="Prim" disabled <?php echo 'value = "'.$priu.'">'; ?>
+<input type="text" name="Primary" id="ModPrim" disabled <?php echo 'value = "'.$priu.'">'; ?>
 </p>
 
 <p>
-<input type="checkbox" name="upmodmem" class="fieldcheck">
+<input type="checkbox" name="upmodstat" class="fieldcheck">
 <label for = "Stat1">Status</label>
-<select name = "Status" id = "Stat1" disabled>
+<select name = "Status" id = "ModStat1" disabled>
 <option value = "Backstock">Backstocked</option>
 <option value = "Ready">Ready for Deployment</option>
 <option value = "Deployed">Deployed</option>
