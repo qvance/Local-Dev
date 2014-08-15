@@ -10,7 +10,7 @@ if (isset($_POST['Save'])) {
 
 
 $serialnumber = $_POST['SerialNumber'];
-$modelnumber = $_POST['ModelNumber'];
+/* $modelnumber = $_POST['ModelNumber'];
 $modelname = $_POST['ModelName'];
 $manufacturer = $_POST['Manufacturer'];
 $type = $_POST['Type'];
@@ -20,27 +20,24 @@ $graphics = $_POST['Graphics'];
 $operatingsystem = $_POST['OS'];
 $assetnumber = $_POST['AssetName'];
 $location = $_POST['Location'];
-$primary = $_POST['Primary'];
-$status = $_POST['Status'];
+$status = $_POST['Status']; */
 
 $asset = array(
-	'Serial Number' => $serialnumber,
-	'Model Number' => $modelnumber,
-	'Model Name' => $modelname,
-	'Manufacturer' => $manufacturer,
-	'Type' => $type,
-	'Processor' => $processor,
-	'Memory' => $memory,
-	'Graphics' => $graphics,
-	'OS' => $operatingsystem,
-	'Asset Name' => $assetnumber,
-	'Location' => $location,
-	'Primary User' => $primary,
-	'Status' => $status,
+	'Serial Number' => $_POST['SerialNumber'],
+	'Model Number' => $_POST['ModelNumber'],
+	'Model Name' => $_POST['ModelName'],
+	'Manufacturer' => $_POST['Manufacturer'],
+	'Type' => $_POST['Type'],
+	'Processor' => $_POST['Processor'],
+	'Memory' => $_POST['Memory'],
+	'Graphics' => $_POST['Graphics'],
+	'OS' => $_POST['OS'],
+	'Location' => $_POST['Location'],
+	'Status' => $_POST['Status'],
 );
 
 
-$verify = $collection->findOne(array("Serial Number" => "$serialnumber"));
+$verify = $collection->findOne(array("Serial Number" => $_POST['SerialNumber']));
 
 if($verify !== NULL) {
 
@@ -48,6 +45,25 @@ $sysmessage = "This asset already has been logged. Please check your information
 $jsalert = "<script type = text/javascript> alert ('{$serialnumber} already exists!'); </script>";
 	
 } else {
+
+if ($_POST['Status'] == 'Deployed') {
+
+$deployeddate = $_POST['DeployedDate'];
+
+if (empty($deployeddate) != 1) {
+$asset['Deployed Date'] = new MongoDate(strtotime($_POST['DeployedDate']));
+$asset['Asset Name'] = $_POST['AssetName'];
+$asset['Primary User'] = $_POST['Primary'];
+
+} else {
+
+$asset['Deployed Date'] = $deployeddate;
+$asset['Asset Name'] = $_POST['AssetName'];
+$asset['Primary User'] = $_POST['Primary'];
+
+}
+
+}
 
 $assetcount = 0;
 $emptybanners = array();
@@ -73,8 +89,7 @@ if (count($asset) == $assetcount) {
 
 $collection->insert($asset);
 
-$sysmessage = "$serialnumber has been logged.";
-unset ($serialnumber, $modelnumber, $modelname, $manufacturer, $type, $processor, $memory, $graphics, $operatingsystem, $assetnumber, $location, $primary, $status);
+$sysmessage = $_POST['SerialNumber'].' has been logged.';
 
 }
 
@@ -99,7 +114,7 @@ $sysmessage = "Please fill in the following information: " . join(", ", $emptyba
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css" />
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
-<script type='text/javascript' src="LeSigh.js"></script>
+<script type='text/javascript' src="LeSighTime.js"></script>
 
 <title>DISA Inventory - Asset Entry</title>
 
@@ -115,12 +130,12 @@ $sysmessage = "Please fill in the following information: " . join(", ", $emptyba
 <div class="trial">
 <div class="container">
 <ul class="menu" rel="sam1">
-<li><a href="http://localhost/~quentinvance/Home.php">Home</a></li>
-<li class="active"><a href="http://localhost/~quentinvance/AssetEntry.php">Asset Entry</a></li>
-<li><a href="http://localhost/~quentinvance/ModelEntry.php">Model Entry</a></li>
-<li><a href="#">Search</a></li>
-<li><a href="http://localhost/~quentinvance/UpdateSearch.php">Update Entry</a></li>
-<li><a href="#">Miscellanea</a></li>
+<li><a href = "http://localhost/~quentinvance/Home.php">Home</a></li>
+<li class = "active"><a href="http://localhost/~quentinvance/AssetEntry.php">Asset Entry</a></li>
+<li><a href = "http://localhost/~quentinvance/ModelEntry.php">Model Entry</a></li>
+<li><a href = "#">Search</a></li>
+<li><a href = "http://localhost/~quentinvance/UpdateSearch.php">Update Entry</a></li>
+<li><a href = "#">Miscellanea</a></li>
 </ul>
 
 </div>
@@ -128,13 +143,13 @@ $sysmessage = "Please fill in the following information: " . join(", ", $emptyba
 </div>
 </div>
 
-		<div id="left">
-		<img src="http://cuteoverload.files.wordpress.com/2009/07/george-4.jpg"/>
+		<div id = "left">
+		<img src = "http://cuteoverload.files.wordpress.com/2009/07/george-4.jpg"/>
 		<p>How to properly handle inventory.</p>
 
 		</div>
 
-		<div id="right">
+		<div id = "right">
 		
 <script type = "text/javascript">
 $(document).ready(function() {
@@ -148,17 +163,17 @@ $(document).ready(function() {
 
 <fieldset>
 
-<form method="post" action="">
+<form method = "post" action = "">
 
 <p>
-<label for="SerNum">Serial Number</label>
-<input type="text" name="SerialNumber" id="SerNum">
+<label for = "SerNum">Serial Number</label>
+<input type = "text" name = "SerialNumber" id = "SerNum">
 </p>
 
 <p id = "Modeled">
-<label for="ModNumber">Model Number</label>
-<select name="ModelNumber" id = "ModNumber">
-<option value="choice">Choose wisely...</option>
+<label for = "ModNumber">Model Number</label>
+<select name = "ModelNumber" id = "ModNumber">
+<option value = "choice">Choose wisely...</option>
 
 
 <?php
@@ -176,32 +191,32 @@ $models = $collection->find();
 </p>
 
 <p>
-<label for="ModName">Model Name</label>
-<input type="text" name="ModelName" id="ModName">
+<label for = "ModName">Model Name</label>
+<input type = "text" name = "ModelName" id = "ModName">
 </p>
 
 <p>
-<label for="Manu">Manufacturer</label>
-<input type="text" name="Manufacturer" id="Manu">
+<label for = "Manu">Manufacturer</label>
+<input type = "text" name = "Manufacturer" id = "Manu">
 </p>
 
 <p>
-<label for="Typical">Type</label>
-<input type="text" name="Type" id="Typical">
+<label for = "Typical">Type</label>
+<input type = "text" name = "Type" id = "Typical">
 </p>
 
 <p>
-<label for="Proc">Processor</label>
-<input type="text" name="Processor" id="Proc">
+<label for = "Proc">Processor</label>
+<input type = "text" name = "Processor" id = "Proc">
 </p>
 
 <p>
-<label for="Mem">Memory(GB)</label>
-<input type="text" name="Memory" id="Mem">
+<label for = "Mem">Memory(GB)</label>
+<input type = "text" name = "Memory" id = "Mem">
 </p>
 
 <p>
-<label for= "Graph">Graphics Card</label>
+<label for = "Graph">Graphics Card</label>
 <select name = "Graphics" id = "Graph">
 <option value = 1>"Yes"</option>
 <option value = 0>"No"</option>
@@ -209,8 +224,8 @@ $models = $collection->find();
 </p>
 
 <p>
-<label for="OS">OS</label>
-<select name= "OS" id = "OS">
+<label for = "OS">OS</label>
+<select name = "OS" id = "OS">
 <option value = "Windows 8 Pro">Windows 8 Professional</option>
 <option value = "Windows 8">Windows 8</option>
 <option value = "Windows 7 Pro">Windows 7 Professional</option>
@@ -227,12 +242,7 @@ $models = $collection->find();
 </p>
 
 <p>
-<label for="AN">Asset Name</label>
-<input type="text" name="AssetName" id="AN">
-</p>
-
-<p>
-<label for="Loc">Location</label>
+<label for = "Loc">Location</label>
 <select name = "Location" id = "Loc">
 <option value = "Corp">Corporate</option>
 <option value = "Colo">Sungard</option>
@@ -252,12 +262,7 @@ $models = $collection->find();
 </select>
 </p>
 
-<p>
-<label for="Prim">Primary User</label>
-<input type="text" name="Primary" id="Prim">
-</p>
-
-<p>
+<p id="Current">
 <label for = "Stat1">Status</label>
 <select name = "Status" id = "Stat1">
 <option value = "Backstock">Backstocked</option>
@@ -265,6 +270,21 @@ $models = $collection->find();
 <option value = "Deployed">Deployed</option>
 <option value = "Awaiting Repair">Awaiting Repair</option>
 </select>
+</p>
+
+<p>
+<label for = "DeployedDate">Entered Service</label>
+<input type = "date" name = "DeployedDate" id= "Deployed" disabled = "disabled" <?php  $curdate = date('Y/m/d'); echo 'value = "'.$curdate.'">'; ?>
+</p>
+
+<p>
+<label for = "AN">Asset Name</label>
+<input type = "text" name = "AssetName" id = "AN" disabled = "disabled">
+</p>
+
+<p>
+<label for="Prim">Primary User</label>
+<input type="text" name="Primary" id="Prim" disabled = "disabled">
 </p>
 
 <p>
